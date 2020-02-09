@@ -21,7 +21,8 @@ All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 
 """
 
-from heapq import *
+import heapq
+from typing import List
 
 INF = 1 << 60
 
@@ -33,16 +34,38 @@ class Solution:
         for t in times:
             g[t[0]] += [(t[2], t[1])]
         while q:
-            u = heappop(q)[1]
+            u = heapq.heappop(q)[1]
             for e in g[u]:
                 t, v = d[u] + e[0], e[1]
                 if t < d[v]:
                     d[v] = t
-                    heappush(q, (d[v], v))
+                    heapq.heappush(q, (d[v], v))
         return -(INF in d[1:]) or max(d[1:])
 
+    def networkDelayTime2(self, times: List[List[int]], N: int, K: int) -> int:
+        
+        graph = defaultdict(list)
+        for (u, v, w) in times:
+            graph[u].append((v, w))
 
-if __name__=='__main__':
+        dist, q, visited = {K:0}, [(0, K)], set()
+        
+        while q:
+            d, min_node = heapq.heappop(q)
+            if min_node not in visited:   
+                visited.add(min_node)
+                for (neighbor, w) in graph.get(min_node, []):
+                    if neighbor not in dist or d + w < dist[neighbor]:
+                        dist[neighbor] = d + w
+                        heapq.heappush(q, (d+w, neighbor))
+        
+        if len(visited) < N:
+            return -1
+        else:
+            return max(dist.values())
+
+
+if __name__ == '__main__':
 
     sol = Solution()
 
