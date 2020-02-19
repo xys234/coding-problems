@@ -3,6 +3,8 @@
 
 """
 
+from typing import List
+
 
 class TrieNode:
     def __init__(self):
@@ -17,6 +19,7 @@ class Trie:
         Initialize your data structure here.
         """
         self.root = TrieNode()
+        self.words = []
 
     def insert(self, word: str) -> None:
         """
@@ -57,3 +60,36 @@ class Trie:
             else:
                 p = p.children[w]
         return True
+    
+    def suggest_help(self, node, w):
+        """
+        recursively traverse the trie and return a whole word
+        """
+        if node.endofword:
+            self.words.append(w)
+        
+        for c, n in node.children.items():
+            self.suggest_help(n, w+c)
+    
+    def suggest(self, search_word):
+        self.words.clear()
+        
+        p = self.root
+        not_matched = False
+        prefix = ''
+        
+        for c in search_word:
+            if c not in p.children:
+                not_matched = True
+                break
+            
+            p = p.children[c]
+            prefix += c
+        
+        if not_matched:
+            return []
+        
+        self.suggest_help(p, prefix)
+        return self.words
+            
+

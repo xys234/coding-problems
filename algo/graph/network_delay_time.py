@@ -23,6 +23,7 @@ All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 
 import heapq
 from typing import List
+from collections import defaultdict
 
 INF = 1 << 60
 
