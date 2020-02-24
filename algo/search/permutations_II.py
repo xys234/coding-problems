@@ -59,6 +59,35 @@ class Solution:
         dfs(nums)
         return res
 
+    def permuteUnique2(self, nums):
+        """
+
+        Permutation with duplicates
+        """
+
+        n = len(nums)
+        if n <= 1:
+            return nums
+
+        nums.sort()
+        ans = []
+        visited = [False for _ in nums]
+
+        def dfs(curr):
+            if len(curr) == n:
+                ans.append(curr[:])
+                return
+
+            prev = -1
+            for i, num in enumerate(nums):
+                if not visited[i] and (prev < 0 or nums[prev] != num):
+                    visited[i] = True
+                    dfs(curr+[num])
+                    visited[i] = False
+                    prev = i
+
+        dfs([])
+        return ans
 
 if __name__ == '__main__':
 
@@ -66,7 +95,7 @@ if __name__ == '__main__':
 
     cases = [
 
-        (sol.permuteUnique_v2, ([1, 1, 2], ), [[1, 1, 2], [1, 2, 1], [2, 1, 1]]),
+        (sol.permuteUnique2, ([1, 1, 2], ), [[1, 1, 2], [1, 2, 1], [2, 1, 1]]),
 
              ]
 

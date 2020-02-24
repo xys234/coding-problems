@@ -43,6 +43,10 @@ class Solution:
         return max_profit
 
     def maxProfit2(self, prices):
+        """
+        
+        1-dimensional DP. dp[i] is the maximum profit at day i
+        """
         max_profit = 0
         for k in range(1, len(prices)):
             max_profit = max(max_profit, prices[k] - prices[k-1] + max_profit)

@@ -151,6 +151,10 @@ class Solution:
         return profit, trades
 
     def maxProfit2(self, prices):
+        """
+        
+        dp[i][j] is the max profit at day j with i trades
+        """
 
         if not prices:
             return 0
@@ -158,17 +162,16 @@ class Solution:
         MAX_TRADES = 2
         dp = [[0 for _ in prices] for _ in range(MAX_TRADES)]
 
+        # Solve for dp[1][j]
         lowest_price = prices[0]
         for j in range(1, len(prices)):
             lowest_price = min(lowest_price, prices[j])
             dp[0][j] = max(dp[0][j-1], prices[j] - lowest_price)
 
         for j, price in enumerate(prices):
-            if j < 1:
-                dp[1][j] = 0
-            else:
-                for k in range(j):
-                    dp[1][j] = max(dp[1][j], dp[1][j-1], dp[0][j-k]+price-prices[j-k])
+            # max between no trade, and make one trade at day k and then make the 2nd trade at day j
+            for k in range(j):
+                dp[1][j] = max(dp[1][j], dp[1][j-1], dp[0][j-k]+price-prices[j-k])
         return dp[1][-1]
 
     def maxProfit3(self, prices):

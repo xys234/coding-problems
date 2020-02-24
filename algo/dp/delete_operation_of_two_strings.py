@@ -20,6 +20,11 @@ Characters in given words can only be lower-case letters.
 
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
+        """
+        
+        dp[i][j] is the minimum cost for substring word1[:i] and word2[:j]
+        padding is necessary since dp[i-1][j] and dp[i][j-1] are needed
+        """
         m, n = len(word1), len(word2)
         dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
 

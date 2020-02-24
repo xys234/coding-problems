@@ -23,6 +23,8 @@ Would this affect the run-time complexity? How and why?
 
 """
 
+from typing import List
+
 class Solution(object):
     def search(self, nums, target):
         """
@@ -98,10 +100,43 @@ class Solution(object):
         else:
             return self.find_pivot(nums, mid+1, high)
 
+    def search2(self, nums: List[int], target: int) -> int:
+        """
+        
+        Binary search. When there are duplicates, the sorted half cannot be identified when nums[0] == nums[mid]. 
+        Therefore, the left pointer can only be moved to the right by 1 instead of moving to mid
+        """
+        if not nums:
+            return False
+        
+        l, r = 0, len(nums) - 1
+        
+        while l <= r:
+            mid = l + (r - l) // 2
+            
+            if nums[mid] == target:
+                return True
+            
+            if nums[l] < nums[mid]:
+                # left half is the sorted array and right half rotated array
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            elif nums[l] > nums[mid]:
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1 
+                else:
+                    r = mid - 1
+            else:
+                l += 1
+    
+        return False
 
 if __name__=='__main__':
 
     sol = Solution()
+    method = sol.search2
 
     cases = [
         # (sol.find_pivot, ([3,4,5,6,7,1,2], 0, 6), 4),
@@ -116,16 +151,16 @@ if __name__=='__main__':
         # (sol.binary_search, ([1], 0, 0, 0), -1),
         # (sol.binary_search, ([1], 1, 0, 0), 0),
         # (sol.binary_search, ([1, 1, 3], 3, 0, 2), 2),
-        # (sol.search, ([4,5,6,7,0,1,2], 0), True),
-        # (sol.search, ([4,5,6,7,0,1,2], 3), False),
-        # (sol.search, ([], 3), False),
-        # (sol.search, ([1], 1), True),
-        # (sol.search, ([1,1,3], 3), True),
-        # (sol.search, ([3,1], 3), True),
-        # (sol.search, ([2,5,6,0,0,1,2], 0), True),
-        # (sol.search, ([2,5,6,0,0,1,2], 3), False),
-        # (sol.search, ([1,1,2,1,1,1,1,1,1], 2), True),
-        (sol.search, ([1]*4+[2]+[1]*8, 2), True),
+        # (method, ([4,5,6,7,0,1,2], 0), True),
+        # (method, ([4,5,6,7,0,1,2], 3), False),
+        # (method, ([], 3), False),
+        # (method, ([1], 1), True),
+        # (method, ([1,1,3], 3), True),
+        # (method, ([3,1], 3), True),
+        # (method, ([2,5,6,0,0,1,2], 0), True),
+        # (method, ([2,5,6,0,0,1,2], 3), False),
+        (method, ([1,1,2,1,1,1,1,1,1], 2), True),
+        # (method, ([1]*4+[2]+[1]*8, 2), True),
              ]
 
     for i, (func, case, expected) in enumerate(cases):

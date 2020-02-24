@@ -63,6 +63,27 @@ class Solution(object):
             max_len = max(max_len, length)
         return max_len
 
+    def lengthOfLongestSubstring3(self, s: str) -> int:
+        """
+        
+        Sliding window. 
+        When the right end is fixed, determine the left end in O(1) time. 
+        The window status is maintained by a dictionary recording the position of last appearance of the current element
+        """
+        n = len(s)
+        if n <= 1:
+            return n
+        
+        l, r = 0, 1
+        ans = 1
+        d = {s[0]: 0}
+        while r < n:
+            if s[r] in d:
+                l = max(l, d[s[r]]+1)
+            d[s[r]] = r
+            ans = max(ans, r - l + 1)
+            r += 1
+        return ans
 
 if __name__ == "__main__":
     

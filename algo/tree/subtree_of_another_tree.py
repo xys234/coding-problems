@@ -64,6 +64,10 @@ class Solution:
         return help(s, t) or self.isSubtree(s.left, t) or self.isSubtree(s.right, t) 
     
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+        """
+        
+        Pre-order traversal to serialize the tree and then compare. 
+        """
         def bfs(node,f,left=True):
             if node:
                 f[0] += '#'+str(node.val)

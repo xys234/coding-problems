@@ -29,6 +29,13 @@ from typing import List
 
 class Solution:
     def maxCoins(self, nums: 'List[int]') -> 'int':
+        """
+        
+        dp[i][j]: the max points collected by bursting balloons from i to j
+        Solve from short substring to long substring
+        """
+
+
         n = len(nums)
         padded = [1]*(n+2)
         padded[1:-1] = nums

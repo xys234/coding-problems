@@ -128,7 +128,7 @@ class Solution(object):
             if nums[mid] == target:
                 return mid
             
-            if nums[l] <= nums[mid]:
+            if nums[l] < nums[mid]:
                 # left half is the sorted array and right half rotated array
                 if nums[l] <= target < nums[mid]:
                     r = mid - 1

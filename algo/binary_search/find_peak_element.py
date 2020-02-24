@@ -47,3 +47,45 @@ class Solution:
             else:
                 r = mid
         return l - 1        
+    
+    def findPeakElement2(self, nums: List[int]) -> int:
+        """
+        
+        Binary search. 
+        Padding since comparison involves mid - 1 and mid + 1
+        """
+        nums.insert(0, -float('inf'))
+        nums.append(-float('inf'))
+        l, r = 0, len(nums)
+
+        while l < r:
+            mid = l + (r - l) // 2
+            if nums[mid] > nums[mid-1] and nums[mid] > nums[mid+1]:
+                return mid - 1
+            
+            elif nums[mid] <= nums[mid-1] and nums[mid] <= nums[mid+1]:
+                r = mid 
+            elif  nums[mid-1] <= nums[mid] <= nums[mid+1]:
+                l = mid
+            elif nums[mid-1] >= nums[mid] >= nums[mid+1]:
+                r = mid
+        return l
+
+
+if __name__ == '__main__':
+    sol = Solution()
+    method = sol.findPeakElement2
+
+    cases = [
+        (method, ([1,2,1,3,5,6,4],), (1, 5)),
+        (method, ([1,2],), (1,)),
+        (method, ([2,1],), (0,)),
+        (method, ([2],), (0,)),
+    ]
+
+    for i, (func, case, expected) in enumerate(cases):
+        ans = func(*case)
+        if ans in expected:
+            print("Case {:d} Passed".format(i + 1))
+        else:
+            print("Case {:d} Failed; Expected {:s} != {:s}".format(i + 1, str(expected), str(ans)))

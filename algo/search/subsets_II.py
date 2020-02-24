@@ -2,7 +2,8 @@
 
 90.
 
-Given a collection of integers that might contain duplicates, nums, return all possible subsets (the power set).
+Given a collection of integers that might contain duplicates, nums, 
+return all possible subsets (the power set).
 
 Note: The solution set must not contain duplicate subsets.
 
@@ -61,10 +62,32 @@ class Solution:
                 dfs([], 0, l)
         return res
 
+    def subsetsWithDup2(self, nums):
+        """
+        
+        Combination with duplicates.
+
+        """
+        ans = []
+        nums.sort()
+
+        def dfs(curr, start, l):
+            if len(curr) == l:
+                ans.append(curr[:])
+                return
+            
+            for i in range(start, len(nums)):
+                if i == start or nums[i] != nums[i-1]:
+                    dfs(curr+[nums[i]], i+1, l)
+        
+        for l in range(len(nums)+1):
+            dfs([], 0, l)
+        return ans
+
 if __name__ == '__main__':
 
     sol = Solution()
-    method = sol.subsetsWithDup_v2
+    method = sol.subsetsWithDup2
 
     cases = [
 

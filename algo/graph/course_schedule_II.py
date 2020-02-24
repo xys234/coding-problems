@@ -39,6 +39,7 @@ Solution:
 
 '''
 
+from collections import defaultdict
 
 class Solution:
 
@@ -130,16 +131,47 @@ class Solution:
                     return []
         return sorted_g[::-1]
 
+    def findOrder3(self, numCourses, prerequisites):
+        g = defaultdict(list)
+        for e in prerequisites:
+            if e:
+                g[e[1]].append(e[0])
+        
+        finish_time = [(i, 0) for i in range(numCourses)]
+        WHITE, GREY, BLACK = 0, 1, 2
+        color = [WHITE for _ in range(numCourses)]
+        time = 0
+
+        def dfs(v):
+            nonlocal time 
+            time += 1
+            color[v] = GREY
+            for n in g.get(v, []):
+                if color[n] == WHITE and not dfs(n):
+                    return False
+                elif color[n] == GREY:
+                    return False
+            color[v] = BLACK
+            time += 1
+            finish_time[v] = (v, time)
+            return True
+        
+        for v in g.keys():
+            if color[v] == WHITE and not dfs(v):
+                return []
+        # print(finish_time)
+        return [i for i, _ in sorted(finish_time, key=lambda x: -x[1])]
+        
 
 if __name__ == '__main__':
     sol = Solution()
+    method = sol.findOrder3
 
     cases = [
-        (sol.findOrder2, (2, [[1, 0]],), ([0, 1],)),
-        (sol.findOrder2, (4, [[1, 0], [2, 0], [3, 1], [3, 2]],), ([0, 1, 2, 3], [0, 2, 1, 3])),
-        (sol.findOrder2, (1, [[]],), ([0],)),
-        # (sol.findOrder2, (4, [[1,0],[2,0],[3,1],[3,2]],), True),
-        # (sol.findOrder2, (4, [[2,0], [1,0], [3,1], [3,2], [1,3]],), False),
+        (method, (2, [[1, 0]],), ([0, 1],)),
+        (method, (4, [[1, 0], [2, 0], [3, 1], [3, 2]],), ([0, 1, 2, 3], [0, 2, 1, 3])),
+        (method, (1, [[]],), ([0],)),
+        (method, (4, [[2,0], [1,0], [3,1], [3,2], [1,3]],), ([],)),
 
              ]
 

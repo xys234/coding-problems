@@ -1,5 +1,6 @@
 """
 852. Peak Index in a Mountain Array
+Easy
 
 Let's call an array A a mountain if the following properties hold:
 
@@ -45,18 +46,33 @@ class Solution(object):
         return l
 
     def peakIndexInMountainArray2(self, A):
-        pass
+        """
+        
+        2020.02.23: Binary search.
+        """
+        l, r = 0, len(A)
+        while l < r:
+            mid = l + (r - l) // 2
+            if A[mid-1] < A[mid] > A[mid+1]:
+                return mid
+            
+            elif A[mid-1] <= A[mid] <= A[mid+1]:
+                l = mid
+            elif A[mid-1] >= A[mid] >= A[mid+1]:
+                r = mid
+        return l
 
 if __name__ == '__main__':
 
     sol = Solution()
+    method = sol.peakIndexInMountainArray2
 
     cases = [
 
-        (sol.peakIndexInMountainArray, ([0,2,1,0],), 1),
-        (sol.peakIndexInMountainArray, ([0,3,2,1,0],), 1),
-        (sol.peakIndexInMountainArray, ([0,1,0],), 1),
-        (sol.peakIndexInMountainArray, ([0,1,2,3,4,2],), 4),
+        (method, ([0,2,1,0],), 1),
+        (method, ([0,3,2,1,0],), 1),
+        (method, ([0,1,0],), 1),
+        (method, ([0,1,2,3,4,2],), 4),
              ]
 
     for i, (func, case, expected) in enumerate(cases):

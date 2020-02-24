@@ -45,6 +45,11 @@ class Solution:
 
     def networkDelayTime2(self, times: List[List[int]], N: int, K: int) -> int:
         
+        """
+        
+        Dijkstra's algorithm for one-to-many shortest path
+        """
+
         graph = defaultdict(list)
         for (u, v, w) in times:
             graph[u].append((v, w))

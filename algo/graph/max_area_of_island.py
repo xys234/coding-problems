@@ -34,6 +34,13 @@ from typing import List
 
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        """
+        
+        DFS
+        Use a mutable to record the recursion depth (number of 1's found).
+        The return value is the depth. In cycle detection, the return value is bool
+        to indicate if a cycle is found
+        """
         if not grid:
             return 0
 
@@ -44,7 +51,7 @@ class Solution:
         def dfs(x, y, area):
             if grid[x][y] == 1:
                 area[0] += 1
-                grid[x][y] = 0
+                grid[x][y] = 0   # mark visited. A seperate matrix could be used if overwriting is not desired
 
                 if x + 1 < m and grid[x+1][y] == 1:
                     dfs(x+1, y, area)

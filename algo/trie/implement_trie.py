@@ -63,7 +63,7 @@ class Trie:
     
     def suggest_help(self, node, w):
         """
-        recursively traverse the trie and return a whole word
+        recursively traverse the trie and return a whole word that matches prefix w
         """
         if node.endofword:
             self.words.append(w)

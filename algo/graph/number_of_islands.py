@@ -96,6 +96,11 @@ class Solution:
         return count
 
     def numIslands3(self, grid: List[List[str]]) -> int:
+        """
+        
+        DFS 
+        Find the number of CCs
+        """
         m = len(grid)
         if m > 0:
             n = len(grid[0])
@@ -113,7 +118,7 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == '1':
-                    island += 1
+                    island += 1    # count the number of CCs
                     dfs(grid, i, j)
         return island
 

@@ -32,7 +32,7 @@ class Solution:
 
         def dfs(current_node: 'Node'):
             current_node.visited = True
-            if not hasattr(current_node, 'copy'):
+            if not hasattr(current_node, 'copy'):    # determine if a node has been copied.
                 current_node.copy = Node(current_node.val, [])
             for neighbor in current_node.neighbors:
                 if not hasattr(neighbor, 'copy'):

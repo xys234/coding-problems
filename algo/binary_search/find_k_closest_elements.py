@@ -28,6 +28,13 @@ from typing import List
 
 class Solution:
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        """
+        
+        Binary search.
+        Two pointers to find the right window. A comparison determines if the left or the right pointer
+        needs to be moved
+        """
+
         # special cases
         if arr[0] >= x:
             return arr[:k]
