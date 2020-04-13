@@ -17,6 +17,9 @@ Node 2's value is 2, and it has two neighbors: Node 1 and 3.
 Node 3's value is 3, and it has two neighbors: Node 2 and 4.
 Node 4's value is 4, and it has two neighbors: Node 1 and 3.
 
+2019.02: 1st submission
+2020.04: 2nd submission. Recursion. 
+
 """
 
 
