@@ -1,4 +1,6 @@
 """
+32.
+Hard
 
 Given a string containing just the characters '(' and ')',
 find the length of the longest valid (well-formed) parentheses substring.
@@ -13,6 +15,10 @@ Example 2:
 Input: ")()())"
 Output: 4
 Explanation: The longest valid parentheses substring is "()()"
+
+
+2018.
+2020.05.31
 
 """
 
@@ -36,11 +42,42 @@ class Solution:
             max_dp = max(max_dp, dp[i])
         return max_dp
 
+    def longestValidParentheses2(self, s):
+        """
+        
+        dp[i] is the length of the longest of the substring ending at i including s[i]
+        state transition: 
+          1. if s[i] == '(', dp[i] = 0
+          2. if s[i] == ')', 
+        """
 
-if __name__ == "__main__":
+        n = len(s)
+        dp = [0 for _ in range(n)]
+        maxlen = 0
+        
+        for i, c in enumerate(s):
+            if i > 0 and c == ')':
+                if s[i-1] == '(':
+                    dp[i] = dp[i-2] + 2
+                elif i-1-dp[i-1] >= 0 and s[i-1-dp[i-1]] == '(':
+                    dp[i] = dp[i-1] + dp[i-1-dp[i-1]-1] + 2
+                maxlen = max(maxlen, dp[i])    
+                
+        return maxlen
 
+if __name__=="__main__":
     sol = Solution()
-    # s = "(()"
-    s = "(()())"
-    # s = ")()())"
-    print(sol.longestValidParentheses(s))
+    method = sol.longestValidParentheses2
+
+    cases = [
+        (method, ("(()",), 2),
+        (method, ("(()())",), 6),
+    ]
+
+    for i, (func, case, expected) in enumerate(cases):
+        ans = func(*case)
+        if ans == expected:
+            print("Case {:d} Passed".format(i + 1))
+        else:
+            print("Case {:d} Failed; Expected {:s} != {:s}".format(i + 1, str(expected), str(ans)))
+

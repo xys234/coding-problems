@@ -1,6 +1,7 @@
 """
 
 343. Integer Break
+Medium
 
 Given a positive integer n, break it into the sum of at least two positive integers and
 maximize the product of those integers. Return the maximum product you can get.
@@ -9,6 +10,8 @@ For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 
 
 Note: You may assume that n is not less than 2 and not larger than 58.
 
+2018.: 1st
+2020.05.31: 
 
 """
 
@@ -32,38 +35,24 @@ class Solution:
 
         return dp[-1]
 
+    def integerBreak2(self, n: int) -> int:
+        """
+        
+
+        dp[i] is the maximum product for number i
+        """
+        dp = [0 for _ in range(n+1)]
+        dp[1] = dp[2] = 1
+        
+        for i in range(3, n+1):
+            for j in range(1, i):
+                dp[i] = max(dp[i], dp[i-j]*j, j*(i-j))
+        
+        print(dp)
+        return dp[-1]
+
 if __name__ == "__main__":
 
     sol = Solution()
 
-    # case = 1
-    # n = 10
-    # ans = 36
-    # if sol.integerBreak(n) == ans:
-    #     print("Test case {0:d} passed".format(case))
-    # else:
-    #     print("Test case {0:d} FAILED".format(case))
-    #
-    # case = 2
-    # n = 3
-    # ans = 2
-    # if sol.integerBreak(n) == ans:
-    #     print("Test case {0:d} passed".format(case))
-    # else:
-    #     print("Test case {0:d} FAILED".format(case))
-    #
-    # case = 3
-    # n = 2
-    # ans = 1
-    # if sol.integerBreak(n) == ans:
-    #     print("Test case {0:d} passed".format(case))
-    # else:
-    #     print("Test case {0:d} FAILED".format(case))
-
-    case = 4
-    n = 4
-    ans = 4
-    if sol.integerBreak(n) == ans:
-        print("Test case {0:d} passed".format(case))
-    else:
-        print("Test case {0:d} FAILED".format(case))
+    

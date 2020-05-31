@@ -109,8 +109,9 @@ if __name__ == '__main__':
     # method = sol.largestRectangleArea
 
     cases = [
-        (method, ([2,1,5,6,2,3],), 10),
+        # (method, ([2,1,5,6,2,3],), 10),
         # (method, ([4,6,7],), 12),
+        (method, ([2,2,2,4,6,2],), 12),
     ]
 
     for i, (func, case, expected) in enumerate(cases):

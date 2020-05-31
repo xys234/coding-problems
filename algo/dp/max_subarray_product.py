@@ -29,6 +29,9 @@ class Solution:
         :param nums:
         :return:
 
+
+        dp_max[i]: max subarray product using element i
+        dp_min[i]: min subarray product using element i
         Time: O(n); Space: O(n)
 
         """
