@@ -58,6 +58,10 @@ from typing import List
 class Solution:
 
     def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        """
+        
+        0-1 knapsack problem.
+        """
         n = len(stations)
 
         # maximum distance for first i stations
@@ -65,6 +69,10 @@ class Solution:
         dp[0] = startFuel
 
         for i in range(1, n+1):
+
+            # here j means the number of refueling stops prior to station i
+            # so for station 0, there only could be 0 stops, for station 1, 1 stop.
+
             for j in range(i, 0, -1):
                 if dp[j-1] >= stations[i-1][0]:
                     dp[j] = max(dp[j], dp[j-1]+stations[i-1][1])

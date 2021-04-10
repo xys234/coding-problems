@@ -1,8 +1,17 @@
 """
 
-146. LRU Cache
-
+LC-146 LRU Cache
 Medium
+
+Number of Attempts:     2
+Most Recent Attenpt:    2021.04
+
+Similar Problems:
+LC-460
+
+Concepts:
+doubly-linked list
+hashtable
 
 
 """

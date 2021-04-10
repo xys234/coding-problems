@@ -62,6 +62,31 @@ class Solution:
         else:
             return target in matrix[row]
 
+    def searchMatrix2(self, matrix: List[List[int]], target: int) -> bool:
+        """
+        
+        This algo also solves search_2d_matrix_II
+
+        Let the given element be x, create two variable i = 0, j = n-1 as index of row and column
+        Run a loop until i = 0
+        Check if the current element is greater than x then decrease the count of j. Exclude the current column.
+        Check if the current element is less than x then increase the count of i. Exclude the current row.
+        If the element is equal then print the position and end.
+        
+        """
+        m, n = len(matrix), len(matrix[0])
+        ans = 0
+        i, j = 0, n - 1
+        while i < m and j >= 0:
+            pivot = matrix[i][j]
+            if target == pivot:
+                return True
+                j -= 1
+            elif pivot > target:
+                j -= 1
+            else:
+                i += 1
+        return False
 
 if __name__ == "__main__":
     matrix = [

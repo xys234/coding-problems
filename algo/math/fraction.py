@@ -43,8 +43,8 @@ def fractionToDecimal(numerator: int, denominator: int) -> str:
 
 
 # print(fractionToDecimal(45, 56))
-# print(fractionToDecimal(2, 3))
+print(fractionToDecimal(2, 3))
 # print(fractionToDecimal(2, 4))
 # print(fractionToDecimal(4, 333))
 # print(fractionToDecimal(1, 6))
-print(fractionToDecimal(0, 3))
+# print(fractionToDecimal(0, 3))

@@ -32,7 +32,11 @@ Note:
 The number of calls to MyCalendar.book per test case will be at most 1000.
 In calls to MyCalendar.book(start, end), start and end are integers in the range [0, 10^9].
 
-# brute force works
+2020.10.06
+Condition for two intervals [i1, j1] and [i2, j2] overlap, i1 < j2 and j1 > i2 
+The intersection is [max(i1, i2), min(j1, j2)]
+The union is [min(i1, i2), max(j1, j2)]
+
 
 """
 

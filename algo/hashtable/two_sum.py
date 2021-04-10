@@ -1,3 +1,22 @@
+"""
+
+LC-1
+Easy
+
+Number of Attempts:     7
+Most Recent Attenpt:    2020.12
+
+Similar Problems:
+LC-15
+LC-560
+
+Concepts:
+two pointers
+hashtable
+
+
+"""
+
 class Solution:
     def twoSum(self, nums, target):
         """

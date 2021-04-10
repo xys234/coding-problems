@@ -1,6 +1,6 @@
 /*
 
-614. Second degree follower
+LC-614. Second degree follower
 
 In facebook, there is a follow table with two columns: followee, follower.
 

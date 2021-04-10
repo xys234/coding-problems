@@ -152,7 +152,7 @@ class Solution:
                 elif color[n] == GREY:
                     return False
             color[v] = BLACK
-            time += 1
+            # time += 1
             finish_time[v] = (v, time)
             return True
         

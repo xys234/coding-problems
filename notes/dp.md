@@ -5,7 +5,7 @@ Dynamic programming problems usually solve for optimization problems and count t
 
 
 ## 1. Prefix Sub-Problem
-The sub-problem is for a prefix sub-array. Usually, the station transition takes the following form
+The sub-problem is for a prefix sub-array. Usually, the state transition takes the following form
 
 `dp[i] = f{dp[i-k], g(arr[i-k:i])} for k in [i-kmax, i)`
 
@@ -13,6 +13,7 @@ This `g` function should be evaluated easily. and `dp[i-k]` is previously solved
 shorter than dp[i].
 
 * [x] LC-32: Longest Valid Parentheses
+* [x] LC-140: Word Break II
 * [x] LC-152: Maximum Subarray Product
 * [x] LC-343: Integer Break
 * [x] LC-639: Decode Ways II

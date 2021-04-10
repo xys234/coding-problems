@@ -37,13 +37,12 @@ class EventType(IntEnum):
 
 
 class Event:
-    eid = -1
-    def __init__(self, x, h, type):
-        Event.eid += 1
-        self._id = Event.eid
+
+    def __init__(self, x, h, type, id):
         self._x = x
         self._height = h
         self._type = type
+        self._id = id
 
     def __lt__(self, other):
         if self._x == other._x:
@@ -58,7 +57,7 @@ class Event:
 class MaxHeap:
     def __init__(self, maxsize):
         self._vals = [()]*maxsize       # (height, id)
-        self._idx = [0]*maxsize       # idx_[id] is the index of the element in the heap, i,e, vals
+        self._idx = [-1]*maxsize       # idx_[id] is the index of the element in the heap, i,e, vals
         self._size = 0
 
     def add(self, e):
@@ -70,6 +69,7 @@ class MaxHeap:
         self._idx[e._id] = self._size
         self._vals[self._size] = (e._height, e._id)
         self._size += 1
+        self.max_heapify_up(self._size-1)
 
     def _swap_nodes(self, i, j):
         self._idx[self._vals[i][1]], self._idx[self._vals[j][1]] = \
@@ -83,24 +83,25 @@ class MaxHeap:
         :return:
         """
         p = (i-1) // 2
-        if self._vals[p][0] > self._vals[i][0] or i == 0:
+        if i == 0 or self._vals[p][0] > self._vals[i][0]:
             return
         else:
             self._swap_nodes(p, i)
             self.max_heapify_up(p)
 
     def max_heapify_down(self, i):
-        c1, c2 = 2*i+1, 2*i+2
-        if c1>=self._size:
-            return
-        else:
-            while True:
-                if self._vals[c1][0] > self._vals[c2][0]:
-                    max_c = c1
-                else:
-                    max_c = c2
-                self._swap_nodes(max_c, i)
-                self.max_heapify_down(max_c)
+        while True:
+            c1, c2 = 2*i+1, 2*i+2
+            if c1 >= self._size:  # no child
+                return
+            if c2 < self._size and self._vals[c1][0] < self._vals[c2][0]:
+                max_c = c2
+            else:
+                max_c = c1
+            if self._vals[max_c][0] < self._vals[i][0]:
+                return
+            self._swap_nodes(max_c, i)
+            i = max_c
 
     def remove_max(self):
         self._swap_nodes(0, self._size-1)
@@ -112,9 +113,10 @@ class MaxHeap:
     def remove_by_id(self, eid):
         index = self._idx[eid]
         self._swap_nodes(index, self._size-1)
-        self._vals.pop()
-        self._idx.pop()
         self._size -= 1
+        self.max_heapify_down(index)
+        # self._vals.pop(self._size-1)
+        # self._idx.pop(eid)
 
     def empty(self):
         return self._size == 0
@@ -127,8 +129,7 @@ class MaxHeap:
 
 
 class Solution:
-    @classmethod
-    def get_events(cls, buildings):
+    def get_events(self, buildings):
         """
         Convert buildings to entering and leaving events
         :param buildings: [(start_x, end_x, height)]
@@ -136,9 +137,9 @@ class Solution:
         :return:
         """
         events = []
-        for b in buildings:
-            events.append(Event(b[0], b[2], EventType.ENTER))
-            events.append(Event(b[1], b[2], EventType.LEAVING))
+        for i, b in enumerate(buildings):
+            events.append(Event(b[0], b[2], EventType.ENTER, i))
+            events.append(Event(b[1], b[2], EventType.LEAVING, i))
         events = sorted(events)
         return events
 
@@ -160,17 +161,19 @@ class Solution:
                 type = e._type
                 if type == EventType.ENTER:
                     if heap.empty() or h > heap.max():
-                        heap.add(e)
                         skyline.append((x, h))
+                    heap.add(e)
                 else:
                     heap.remove_by_id(id)
                     if h > heap.max():
-                        skyline.append((x, h))
+                        skyline.append((x, heap.max()))
         return skyline
-
 
 
 
 if __name__=='__main__':
     buildings = [[2,9,10], [3,7,15], [5,12,12], [15,20,10], [19,24,8]]
-    print(list(map(str,Solution.get_events(buildings))))
+    # print(list(map(str,Solution.get_events(buildings))))
+    
+    sol = Solution()
+    print(sol.getSkyline(buildings))

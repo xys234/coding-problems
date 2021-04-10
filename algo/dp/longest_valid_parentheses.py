@@ -49,6 +49,11 @@ class Solution:
         state transition: 
           1. if s[i] == '(', dp[i] = 0
           2. if s[i] == ')', 
+            2.1 if s[i-1] == '('
+            2.2 if s[i-1] == ')'
+        
+        Time: O(n); Space O(n)
+
         """
 
         n = len(s)
